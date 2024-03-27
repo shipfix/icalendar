@@ -254,11 +254,7 @@ defmodule ICalendar.Util.Deserialize do
       if Regex.match?(~r/\//, timezone) do
         timezone
       else
-        Timex.Timezone.Utils.to_olson(timezone)
-      end
-      |> case do
-        nil -> @default_timezone
-        tz -> tz
+        Timex.Timezone.Utils.to_olson(timezone) || @default_timezone
       end
 
     date_string =
