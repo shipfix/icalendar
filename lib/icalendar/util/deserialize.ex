@@ -6,6 +6,8 @@ defmodule ICalendar.Util.Deserialize do
   alias ICalendar.Event
   alias ICalendar.Property
 
+  @default_timezone "Europe/Paris"
+
   def build_event(lines) when is_list(lines) do
     lines
     |> Enum.filter(&(&1 != ""))
@@ -252,7 +254,7 @@ defmodule ICalendar.Util.Deserialize do
       if Regex.match?(~r/\//, timezone) do
         timezone
       else
-        Timex.Timezone.Utils.to_olson(timezone)
+        Timex.Timezone.Utils.to_olson(timezone) || @default_timezone
       end
 
     date_string =
